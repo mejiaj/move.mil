@@ -1,0 +1,22 @@
+uuid: 8e93073f-75dd-460b-9082-1d4237744558
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - uswds_move_mil
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: uswds_move_mil_help
+theme: uswds_move_mil
+region: content
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

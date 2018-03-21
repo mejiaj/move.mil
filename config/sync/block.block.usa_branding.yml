@@ -1,0 +1,25 @@
+uuid: 73001fd7-66c1-4749-ba33-69b072eccf0c
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - usa
+_core:
+  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
+id: usa_branding
+theme: usa
+region: navigation
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 9c00a287-d926-44d2-bc48-f84bc8073e9a
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - uswds_move_mil
+_core:
+  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
+id: uswds_move_mil_breadcrumbs
+theme: uswds_move_mil
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

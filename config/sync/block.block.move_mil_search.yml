@@ -1,0 +1,22 @@
+uuid: dafabc6e-3861-4f94-933b-3e8f112b3b41
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - move_mil
+_core:
+  default_config_hash: za-39d5WDUg6XvbyqSnuVYEeq6QM4qKJxW8MnoAha5A
+id: move_mil_search
+theme: move_mil
+region: sidebar_first
+weight: -1
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  provider: search
+  label_display: visible
+visibility: {  }

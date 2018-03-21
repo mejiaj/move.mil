@@ -1,0 +1,14 @@
+uuid: cc3fdf59-e94e-4b9f-b1e6-1df0773b0a9c
+name: Move.mil
+mail: jeremy.koulish@bixal.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI

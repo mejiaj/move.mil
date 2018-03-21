@@ -1,0 +1,20 @@
+uuid: 6c3ef791-03a6-4320-97f2-8925c06df729
+langcode: en
+status: true
+dependencies:
+  theme:
+    - move_mil
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: move_mil_page_title
+theme: move_mil
+region: content
+weight: -50
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }
