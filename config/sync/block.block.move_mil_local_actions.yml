@@ -1,0 +1,20 @@
+uuid: d01893bb-86db-4b63-9f99-6b60799c8a0e
+langcode: en
+status: true
+dependencies:
+  theme:
+    - move_mil
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: move_mil_local_actions
+theme: move_mil
+region: content
+weight: -20
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

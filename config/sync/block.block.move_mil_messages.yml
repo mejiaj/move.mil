@@ -1,0 +1,22 @@
+uuid: 176259a9-682d-4ad1-8696-8402a6fd3d23
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - move_mil
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: move_mil_messages
+theme: move_mil
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }
