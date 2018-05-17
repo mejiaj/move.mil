@@ -7,3 +7,4 @@ node_modules
 backstop_data
 test/screenshots
 test/error-screenshots
+logs
