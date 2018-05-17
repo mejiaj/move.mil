@@ -8,9 +8,10 @@
   "license": "ISC",
   "scripts": {
     "build": "gulp build",
-    "vis-ref": "backstop reference --configPath=backstop-settings --pathfile=backstop-paths",
+    "vis-ref": "backstop reference --configPath=backstop-settings --refhost=http://google.com",
     "vis-test": "backstop test --configPath=backstop-settings --pathfile=backstop-paths",
-    "screenshots:local": "wdio wdio.conf.js",
+    "screenshots:local": "wdio wdio.conf.js --testURL=home",
+    "screenshots:ie-local": "wdio wdio.ie.conf.js --testURL=home",
     "build-css": "gulp sass",
     "build-js": "gulp javascript",
     "build-img": "gulp images",
@@ -76,9 +77,15 @@
   "devDependencies": {
     "backstopjs": "^3.2.15",
     "casperjs": "^1.1.4",
+    "iedriver": "^3.9.2",
     "minimalist": "^1.0.0",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "slimerjs": "^1.0.0"
+    "slimerjs": "^1.0.0",
+    "wdio-iedriver-service": "^0.1.0",
+    "wdio-mocha-framework": "^0.5.13",
+    "wdio-screenshot": "^0.6.0",
+    "wdio-selenium-standalone-service": "0.0.10",
+    "webdriverio": "^4.12.0"
   }
 }
