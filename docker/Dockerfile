@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.1 as builder
 
 RUN apt-get update && apt-get install -y gnupg
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
@@ -19,9 +19,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN rm -rf /var/lib/apt/lists/*
 
-COPY docker/php.ini /usr/local/etc/php
-RUN a2enmod rewrite
-
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
@@ -33,12 +30,6 @@ RUN curl -L --remote-name https://github.com/sass/dart-sass/releases/download/$D
 RUN tar xzf dart-sass-$DART_SASS_VERSION-linux-x64.tar.gz && rm dart-sass-$DART_SASS_VERSION-linux-x64.tar.gz
 
 ENV PATH="/root/dart-sass:$PATH"
-ENV APACHE_DOCUMENT_ROOT /var/www/html/web
-
-# Change web root and add https redirect
-COPY docker/https-redirect.conf /etc/apache2/conf-enabled/
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # The following section is all in the name of container caching. We copy over the code base AFTER building deps.
 # https://www.sentinelstand.com/article/composer-install-in-dockerfile-without-breaking-cache
@@ -79,4 +70,28 @@ WORKDIR /var/www/html
 RUN composer dump-autoload --optimize && \
         composer run-script post-install-cmd
 
-EXPOSE 80
+FROM php:7.1-fpm-alpine3.7
+
+WORKDIR /var/www/html
+
+RUN apk add --no-cache libpng libpng-dev \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install opcache \
+    && docker-php-ext-install pdo \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install zip \
+    && apk del libpng-dev
+
+COPY docker/php.ini /usr/local/etc/php
+
+RUN curl https://github.com/hechoendrupal/drupal-console-launcher/releases/download/1.8.0/drupal.phar -L -o drupal.phar
+RUN mv drupal.phar /usr/local/bin/drupal
+RUN chmod +x /usr/local/bin/drupal
+
+RUN curl https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar -L -o drush.phar
+RUN mv drush.phar /usr/local/bin/drush
+RUN chmod +x /usr/local/bin/drush
+
+COPY --from=builder /var/www/html /var/www/html
+
+EXPOSE 9001
