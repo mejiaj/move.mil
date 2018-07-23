@@ -94,4 +94,4 @@ RUN chmod +x /usr/local/bin/drush
 
 COPY --from=builder /var/www/html /var/www/html
 
-EXPOSE 9001
+EXPOSE 9000

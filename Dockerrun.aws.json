@@ -6,7 +6,7 @@
   },
   "Ports": [
     {
-      "ContainerPort": "9001"
+      "ContainerPort": "9000"
     }
   ],
   "Volumes": [
