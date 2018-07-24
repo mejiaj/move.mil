@@ -62,6 +62,7 @@ WORKDIR /var/www/html
 RUN composer dump-autoload --optimize && \
         composer run-script post-install-cmd
 
+# Build our runtime image.
 FROM php:7.1-fpm-alpine3.7
 
 WORKDIR /var/www/html

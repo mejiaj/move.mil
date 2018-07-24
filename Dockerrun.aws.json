@@ -6,7 +6,7 @@
   },
   "Ports": [
     {
-      "ContainerPort": "9000"
+      "ContainerPort": "80"
     }
   ],
   "Volumes": [
@@ -14,6 +14,5 @@
       "HostDirectory": "/drupalfiles",
       "ContainerDirectory": "/var/www/html/web/sites/default/files"
     }
-  ],
-  "Logging": "/var/log/apache2"
+  ]
 }
