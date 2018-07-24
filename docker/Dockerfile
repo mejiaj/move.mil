@@ -67,7 +67,7 @@ FROM php:7.1-fpm-alpine3.7
 
 WORKDIR /var/www/html
 
-RUN apk add --no-cache libpng libpng-dev \
+RUN apk add --no-cache libpng libpng-dev mysql-client\
     && docker-php-ext-install gd \
     && docker-php-ext-install opcache \
     && docker-php-ext-install pdo \
