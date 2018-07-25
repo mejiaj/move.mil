@@ -77,7 +77,7 @@ RUN apk add --no-cache libpng libpng-dev mysql-client\
     && rm -rf /var/lib/apt/lists/*
 
 COPY docker/php.ini /usr/local/etc/php
-COPY docker/https-redirect /etc/apache2/conf-enabled/
+COPY docker/https-redirect.conf /etc/apache2/conf-enabled/
 
 RUN curl https://github.com/hechoendrupal/drupal-console-launcher/releases/download/1.8.0/drupal.phar -L -o drupal.phar
 RUN mv drupal.phar /usr/local/bin/drupal
@@ -89,4 +89,4 @@ RUN chmod +x /usr/local/bin/drush
 
 COPY --from=builder /var/www/html /var/www/html
 
-EXPOSE 9000
+EXPOSE 80
