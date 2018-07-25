@@ -63,7 +63,7 @@ RUN composer dump-autoload --optimize && \
         composer run-script post-install-cmd
 
 # Build our runtime image.
-FROM php:7.1-fpm-alpine3.7
+FROM php:7.1-alpine3.7
 
 WORKDIR /var/www/html
 
@@ -73,10 +73,11 @@ RUN apk add --no-cache libpng libpng-dev mysql-client\
     && docker-php-ext-install pdo \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install zip \
-    && apk del libpng-dev
+    && apk del libpng-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY docker/php.ini /usr/local/etc/php
-COPY docker/zz-docker.conf /usr/local/etc/php-fpm.d/
+COPY docker/https-redirect /etc/apache2/conf-enabled/
 
 RUN curl https://github.com/hechoendrupal/drupal-console-launcher/releases/download/1.8.0/drupal.phar -L -o drupal.phar
 RUN mv drupal.phar /usr/local/bin/drupal
