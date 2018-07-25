@@ -1,4 +1,6 @@
-FROM php:7.1 as builder
+FROM php:7.2 as builder
+
+ENV DART_SASS_VERSION 1.7.0
 
 RUN apt-get update && apt-get install -y gnupg
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
@@ -25,7 +27,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');"
 
 WORKDIR /root
-ENV DART_SASS_VERSION 1.7.0
+
 RUN curl -L --remote-name https://github.com/sass/dart-sass/releases/download/$DART_SASS_VERSION/dart-sass-$DART_SASS_VERSION-linux-x64.tar.gz
 RUN tar xzf dart-sass-$DART_SASS_VERSION-linux-x64.tar.gz && rm dart-sass-$DART_SASS_VERSION-linux-x64.tar.gz
 
@@ -63,27 +65,34 @@ RUN composer dump-autoload --optimize && \
         composer run-script post-install-cmd
 
 # Build our runtime image.
-FROM php:7.1-alpine3.7
+FROM php:7.2-apache
+
+ENV APACHE_DOCUMENT_ROOT /var/www/html/web
+ENV DRUPAL_CONSOLE_VERSION 1.8.0
+ENV DRUSH_VERSION 0.6.0
 
 WORKDIR /var/www/html
 
-RUN apk add --no-cache libpng libpng-dev mysql-client\
+RUN apt-get update && apt-get install -y --no-install-recommends mysql-client libpng-dev\
     && docker-php-ext-install gd \
     && docker-php-ext-install opcache \
     && docker-php-ext-install pdo \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install zip \
-    && apk del libpng-dev \
     && rm -rf /var/lib/apt/lists/*
+
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN a2enmod rewrite
 
 COPY docker/php.ini /usr/local/etc/php
 COPY docker/https-redirect.conf /etc/apache2/conf-enabled/
 
-RUN curl https://github.com/hechoendrupal/drupal-console-launcher/releases/download/1.8.0/drupal.phar -L -o drupal.phar
+RUN curl https://github.com/hechoendrupal/drupal-console-launcher/releases/download/$DRUPAL_CONSOLE_VERSION/drupal.phar -L -o drupal.phar
 RUN mv drupal.phar /usr/local/bin/drupal
 RUN chmod +x /usr/local/bin/drupal
 
-RUN curl https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar -L -o drush.phar
+RUN curl https://github.com/drush-ops/drush-launcher/releases/download/$DRUSH_VERSION/drush.phar -L -o drush.phar
 RUN mv drush.phar /usr/local/bin/drush
 RUN chmod +x /usr/local/bin/drush
 
