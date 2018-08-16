@@ -352,7 +352,8 @@ class PpmEstimatorController extends ControllerBase {
       ->execute()
       ->fetchAll();
     $closestCwt = $this->closestValue($ps, $weight, 'cwt');
-    // Get the shorthaul object.
+    dump('packupack where schedule=' . $service_area['services_schedule'] . ' and cwt=' . $closestCwt . ' and year=' . $year);
+    // Get the packunpack object.
     $p = $this->databaseConnection
       ->select('parser_packunpacks')
       ->fields('parser_packunpacks')
@@ -467,11 +468,11 @@ class PpmEstimatorController extends ControllerBase {
   private function otherCharges($start_service_area, $end_service_area, $year, $weight, $cwt) {
     $charges = $start_service_area['orig_dest_service_charge'] + $end_service_area['orig_dest_service_charge'];
     dump('service area charges=$' . $charges);
-    $pack = floatval($this->packunpack($start_service_area, $year, $weight));
-    dump('pack charges=$' . $pack['pack']);
-    $unpack = floatval($this->packunpack($end_service_area, $year));
-    dump('unpack charges=$' . $unpack['unpack']);
-    $packunpack = $pack['pack'] + $unpack['unpack'];
+    $pack = $this->packunpack($start_service_area, $year, $weight);
+    dump('pack charges=$' . floatval($pack['pack']));
+    $unpack = $this->packunpack($end_service_area, $year);
+    dump('unpack charges=$' . floatval($unpack['unpack']));
+    $packunpack = floatval($pack['pack']) + floatval($unpack['unpack']);
     $charges += $packunpack;
     dump('packunpack charges = $' . $charges);
   
