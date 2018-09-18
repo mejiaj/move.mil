@@ -50,7 +50,7 @@ class FeatureContext extends RawDrupalContext {
       $this->insertToDb('parser_discounts', $discount);
     }
   }
-  
+
   private function insertToDb($table, $record) {
     if (empty($this->databaseConnection)) {
       $this->databaseConnection = \Drupal::service('database');
@@ -102,7 +102,7 @@ class FeatureContext extends RawDrupalContext {
     $message = "The text '$text' was not found after a $seconds seconds timeout";
     throw new ResponseTextException($message, $this->getSession());
   }
-  
+
   /**
    * Wait for for a form field with specified id|name|label|value to have a specified value
    * @When I wait :seconds seconds until I see :field field contains :value
@@ -122,14 +122,17 @@ class FeatureContext extends RawDrupalContext {
     $message = "The value '$value' was not found after a $seconds seconds timeout";
     throw new ResponseTextException($message, $this->getSession());
   }
-  
+
   /**
-   * Clicks a form field with specified id|name|label|value to ensure it has the focus
+   * Clicks a form field with specified id|name|label|value to ensure it has
+   * the focus
+   *
    * @When the focus is in field :field
+   * @throws \Behat\Mink\Exception\ElementNotFoundException
    */
   public function focusField($field) {
-    $node = $this->assertSession()->fieldExists($field);
-    $node->click();
+    $element = $this->assertSession()->fieldExists($field);
+    $element->click();
   }
 
   private function entitlements() {
@@ -198,9 +201,16 @@ class FeatureContext extends RawDrupalContext {
         'lat' => '33.7865940000',
         'lon' => '-118.2986620000',
       ],
+      [
+        'code' => '62225',
+        'city' => '',
+        'state' => 'IL',
+        'lat' => '38.543201',
+        'lon' => '-89.85902',
+      ],
     ];
   }
-  
+
   private function serviceAreas() {
     return [
       [
@@ -221,7 +231,7 @@ class FeatureContext extends RawDrupalContext {
       ],
     ];
   }
-  
+
   private function linehauls() {
     return [
       [
@@ -232,7 +242,7 @@ class FeatureContext extends RawDrupalContext {
       ],
     ];
   }
-  
+
   private function packunpacks() {
     return [
       [
@@ -251,7 +261,7 @@ class FeatureContext extends RawDrupalContext {
       ],
     ];
   }
-  
+
   private function discounts() {
     return [
       [
