@@ -9,11 +9,6 @@ Feature: Locator Maps
     And I visit "/resources/locator-maps"
     And I wait 10 seconds until I see text "Search"
 
-  Scenario: Search using zipcode
-    Given I fill in "search" with "62225"
-    When I press "Search"
-    Then I should see "Searching for nearby locations!"
-
   Scenario: Fields need to be fill in
     Given I visit "/resources/locator-maps"
     When I press "Search"

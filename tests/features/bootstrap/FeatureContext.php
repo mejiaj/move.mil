@@ -201,13 +201,6 @@ class FeatureContext extends RawDrupalContext {
         'lat' => '33.7865940000',
         'lon' => '-118.2986620000',
       ],
-      [
-        'code' => '62225',
-        'city' => '',
-        'state' => 'IL',
-        'lat' => '38.543201',
-        'lon' => '-89.85902',
-      ],
     ];
   }
 
