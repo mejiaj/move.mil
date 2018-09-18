@@ -73,12 +73,12 @@ class LocationsController extends ControllerBase {
       return $this->response();
     }
     $geolocation = $this->geoLocation($params);
-    if (empty($this->errors)) {
+    $data = [];
+    if (empty($this->errors) && !empty($geolocation)) {
       $data['geolocation'] = $geolocation;
       $data['offices'] = $this->loadLocations($geolocation);
-      return $this->response($data);
     }
-    return $this->response();
+    return $this->response($data);
   }
 
   /**
@@ -144,7 +144,7 @@ class LocationsController extends ControllerBase {
     }
     $data = json_decode($res->getBody()->getContents(), JSON_OBJECT_AS_ARRAY);
     if ($data['status'] == 'ZERO_RESULTS' || empty($data['results'])) {
-      $this->errors[] = 'There was a problem performing that search. Mind trying again with another location?';
+      // Send empty response.
       return NULL;
     }
     $location = $data['results'][0]['geometry']['location'];
