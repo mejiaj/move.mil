@@ -12,7 +12,7 @@ Feature: Locator Maps
   Scenario: Search using zipcode
     Given I fill in "search" with "62225"
     When I press "Search"
-    Then I should see "Scott AFB"
+    Then I should see "Searching for nearby locations!"
 
   Scenario: Fields need to be fill in
     Given I visit "/resources/locator-maps"
