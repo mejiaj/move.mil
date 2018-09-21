@@ -565,6 +565,7 @@ class PpmEstimatorController extends ControllerBase {
   private function incentives($total, array $discounts) {
     $mincost = floatval($total * $discounts['min']);
     $maxcost = floatval($total * $discounts['max']);
+    dump('raw mincost:' . $mincost);
     $incentives['min'] = $this->floorHundred($mincost);
     $incentives['max'] = $this->ceilHundred($maxcost);
     return $incentives;
